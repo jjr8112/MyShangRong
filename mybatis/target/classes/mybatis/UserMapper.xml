@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jjr8112.mybatis.dao.UserDao">
+    <select id="get" resultType="com.jjr8112.mybatis.domain.UserDO">
+        select `id`,`name`,`age`,`email` from user where id = #{value}
+    </select>
+    <select id="list" resultType="com.jjr8112.mybatis.domain.UserDO">
+        select `id`,`name`,`age`,`email` from user
+        <where>
+            <if test="id != null   and id != '-1' " > and id = #{id} </if>
+            <if test="name != null  and name != '' " > and name = #{name} </if>
+            <if test="age != null  and age != '-1' " > and age = #{age} </if>
+            <if test="email != null   and email != '' " > and email = #{email} </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from user
+        <where>
+            <if test="id != null   and id != '-1'  " > and id = #{id} </if>
+            <if test="name != null  and name != ''  " > and name = #{name} </if>
+            <if test="age != null  and age != '-1'  " > and age = #{age} </if>
+            <if test="email != null   and email != ''  " > and email = #{email} </if>
+        </where>
+    </select>
+    <insert id="save" parameterType="com.jjr8112.mybatis.domain.UserDO" useGeneratedKeys="true" keyProperty="id">
+        insert into user
+        (
+            `name`,
+            `age`,
+            `email`
+        )
+        values
+            (
+                #{name},
+                #{age},
+                #{email}
+            )
+    </insert>
+    <update id="update" parameterType="com.jjr8112.mybatis.domain.UserDO">
+        update user
+        <set>
+            <if test="name != null">`name` = #{name}, </if>
+            <if test="age != null">`age` = #{age}, </if>
+            <if test="email != null">`email` = #{email}</if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="remove">
+        delete from user where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jjr8112.mybatisplus.mapper.UserMapper">
+
+
+
+    <!--解决字段映射装配问题-->
+    <!--方法1：resultMap用于解决装配SQL语句时列名和实体属性名不统一的情况,id用于唯一标识resultMap，type表示对应的实体（映射结果类型）-->
+    <resultMap id="MyUser" type="com.jjr8112.mybatisplus.entity.User">
+        <!--id用于标注主键-->
+        <!--column表示列名，property表示属性名-->
+        <id column="uid" property="id"/>
+        <!--其余列名做映射时标签名为result-->
+        <!--<result column = "" property = ""/>-->
+    </resultMap>
+
+    <!--方法2：以下标签中通过SQL语句加别名的方法解决,列名 as 属性名-->
+    <sql id="BaseColumnList">
+        uid,name,age,email,create_time as createTime,update_time as updateTime,is_deleted
+    </sql>
+
+
+    <select id="selectAllByName" resultType="com.jjr8112.mybatisplus.entity.User">
+        select <include refid="BaseColumnList"/>
+        from user
+        where name = #{name}
+    </select>
+
+    <select id="selectAgeByName" resultMap="MyUser">
+        select `age`
+        from user
+        where name = #{name}
+    </select>
+
+    <select id="selectPageVo" resultType="com.jjr8112.mybatisplus.entity.User">
+        select <include refid="BaseColumnList"/>
+        from user
+        where age > #{age}
+    </select>
+</mapper>

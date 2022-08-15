@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="jpa" />
+        <module name="mybatis-plus" />
+        <module name="test1" />
+        <module name="mybatis" />
+        <module name="Thread" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="jpa" target="1.8" />
+      <module name="mybatis" target="1.8" />
+      <module name="mybatis-plus" target="1.8" />
+      <module name="MyShangRong" target="1.8" />
+      <module name="test1" target="1.8" />
+      <module name="Thread" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="MyShangRong" options="-parameters" />
+      <module name="Thread" options="-parameters" />
+      <module name="jpa" options="-parameters" />
+      <module name="mybatis" options="-parameters" />
+      <module name="mybatis-plus" options="-parameters" />
+      <module name="test1" options="-parameters" />
+    </option>
+  </component>
+</project>
